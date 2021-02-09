@@ -65,13 +65,15 @@ BaseToken2 %>%
   geom_col(alpha = 0.8) +
   xlab(NULL) +
   coord_flip() +
+  geom_label(aes(label = n), fontface = "bold", size = 3) +
   labs(y = "Frecuencia de palabras", 
        x = "Palabras", 
        caption = "Fuente: Diario Extra y CrHoy") +
   theme(panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank(),
         panel.background = element_blank(), 
-        axis.line = element_line(colour = "black")) +
+        axis.line = element_line(colour = "black"),
+        plot.title = element_text(hjust = 0.5)) +
   ggtitle("Top 20 de palabras más frecuentes en las noticias recopiladas")
 
 ### CONDICIONES: LIBERTAD VS PRISION ###
@@ -86,6 +88,11 @@ BaseToken2 %>%
   ggplot(aes(word, n, fill = Condicion)) +
   geom_col(alpha = 0.8, show.legend = FALSE) +
   facet_wrap(~Condicion, scales = "free_y") +
+  geom_label(aes(label = n), 
+             size = 2.5, 
+             fontface = "bold", 
+             position=position_stack(0.96),
+             show.legend = FALSE) +
   coord_flip() +
   scale_x_reordered() +
   scale_y_continuous(expand = c(0,0)) +
@@ -95,7 +102,9 @@ BaseToken2 %>%
   theme(panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank(),
         panel.background = element_blank(), 
-        axis.line = element_line(colour = "black"))
+        axis.line = element_line(colour = "black"),
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5))
 
 # WordCloud comparando frecuencia de palabras Prision vs Libertad en texto.
 WordCloudEdu2 <- 
@@ -104,8 +113,8 @@ WordCloudEdu2 <-
   acast(word ~ Condicion, value.var = "n", fill = 0) %>%
   comparison.cloud(
     colors = c("tomato", "darkturquoise"),
-    max.words = 100)
-dev.new()
+    max.words = 100, random.order = FALSE)
+dev.new() #Palabras repetidas para ambas condiciones no son mostradas en el wordcloud.
 
 ### Análisis para TÍTULOS de noticias ###
 
@@ -123,18 +132,20 @@ BaseTokenTitulos %>%
   mutate(word = reorder(word, n)) %>%
   ggplot(aes(word, n)) +
   geom_col(alpha = 0.8) +
+  geom_label(aes(label = n), fontface = "bold", size = 3) +
   xlab(NULL) +
   coord_flip() +
   labs(y = "Frecuencia de palabras", 
        x = "Palabras",
        caption = "Fuente: Diario Extra y CrHoy") +
-  ggtitle("Top 30 de palabras más frecuentes en titulares de noticias") + 
+  ggtitle("Top 20 de palabras más frecuentes en titulares de noticias") + 
   theme(panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank(),
         panel.background = element_blank(), 
-        axis.line = element_line(colour = "black"))
+        axis.line = element_line(colour = "black"),
+        plot.title = element_text(hjust = 0.5))
 
-# Top 30 palabras más frecuentes en Titulos de noticias
+# Top 20 palabras más frecuentes en Titulos de noticias
 # Libertad vs Prisión
 BaseTokenTitulos %>%
   count(Condicion,word, sort = TRUE) %>%
@@ -145,6 +156,11 @@ BaseTokenTitulos %>%
   ggplot(aes(word, n, fill = Condicion)) +
   geom_col(alpha = 0.8, show.legend = FALSE) +
   facet_wrap(~Condicion, scales = "free_y") +
+  geom_label(aes(label = n), 
+             size = 2.5, 
+             fontface = "bold", 
+             position=position_stack(0.96),
+             show.legend = FALSE) +
   coord_flip() +
   scale_x_reordered() +
   scale_y_continuous(expand = c(0,0)) +
@@ -154,9 +170,11 @@ BaseTokenTitulos %>%
   theme(panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank(),
         panel.background = element_blank(), 
-        axis.line = element_line(colour = "black"))
+        axis.line = element_line(colour = "black"),
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5))
 
-# WordCloud Comparando frecuencia de palabras en t?tulos.
+# WordCloud Comparando frecuencia de palabras en títulos.
 # Condiciones: Prision vs Libre.
 WordCloudEduTitulos <- 
   BaseTokenTitulos %>%
@@ -164,7 +182,7 @@ WordCloudEduTitulos <-
   acast(word ~ Condicion, value.var = "n", fill = 0) %>%
   comparison.cloud(
     colors = c("tomato", "darkturquoise"),
-    max.words = 100)
+    max.words = 100, random.order = FALSE)
 dev.new()
 
 
@@ -183,6 +201,11 @@ BaseToken2 %>%
   ggplot(aes(word, n, fill = Periodico)) +
   geom_col(alpha = 0.8, show.legend = FALSE) +
   facet_wrap(~Periodico, scales = "free_y") +
+  geom_label(aes(label = n), 
+             size = 2.5, 
+             fontface = "bold", 
+             position=position_stack(0.96),
+             show.legend = FALSE) +
   coord_flip() +
   scale_x_reordered() +
   scale_y_continuous(expand = c(0,0)) +
@@ -192,7 +215,9 @@ BaseToken2 %>%
   theme(panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank(),
         panel.background = element_blank(), 
-        axis.line = element_line(colour = "black"))
+        axis.line = element_line(colour = "black"),
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5))
 
 # WordCloud Comparando Frecuencia de palabras Diario Extra vs CrHoy en Texto
 WordCloudEdu3 <- BaseToken2 %>%
@@ -213,6 +238,11 @@ BaseTokenTitulos %>%
   ggplot(aes(word, n, fill = Periodico)) +
   geom_col(alpha = 0.8, show.legend = FALSE) +
   facet_wrap(~Periodico, scales = "free_y") +
+  geom_label(aes(label = n), 
+             size = 2.5, 
+             fontface = "bold", 
+             position=position_stack(0.96),
+             show.legend = FALSE) +
   coord_flip() +
   scale_x_reordered() +
   scale_y_continuous(expand = c(0,0)) +
@@ -222,7 +252,9 @@ BaseTokenTitulos %>%
   theme(panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank(),
         panel.background = element_blank(), 
-        axis.line = element_line(colour = "black"))
+        axis.line = element_line(colour = "black"),
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5))
 
 # WordCloud Comparando Frecuencia de palabras en títulos.
 # Periódicos: Diario Extra vs CrHoy
@@ -371,7 +403,7 @@ bigram_texto <- bigramsTexto %>%
   separate(bigram, c("word1", "word2"), sep = " ") %>%
   filter(!word1 %in% custom_stop_words$word) %>%
   filter(!word2 %in% custom_stop_words$word) %>%
-  filter(n > 20) %>%
+  filter(n > 15) %>%
   graph_from_data_frame() %>%
   ggraph(layout = "fr") +
   geom_edge_link(aes(edge_alpha = n, edge_width = n), edge_colour = "cyan4") +
@@ -393,7 +425,7 @@ bigram_titulo <- bigramsTitulo %>%
   separate(bigram, c("word1", "word2"), sep = " ") %>%
   filter(!word1 %in% custom_stop_words$word) %>%
   filter(!word2 %in% custom_stop_words$word) %>%
-  filter(n > 3) %>%
+  filter(n > 2) %>%
   graph_from_data_frame() %>%
   ggraph(layout = "fr") +
   geom_edge_link(aes(edge_alpha = n, edge_width = n), edge_colour = "cyan4") +
@@ -406,7 +438,7 @@ bigram_titulo <- bigramsTitulo %>%
 bigram_titulo
 
 
-#Comparando frecuencias de palabras entre CRHoy and DiarioExtra
+### Comparando frecuencias de palabras entre CRHoy and DiarioExtra ###
 Frequency <- 
   Abogado2 %>% 
   select(Periodico,Texto) %>%
@@ -454,9 +486,20 @@ Ab_Top_Terms <-
   top_n(15, beta) %>%
   ungroup() %>%
   arrange(topic, -beta) %>%
-  mutate(term = reorder(term, beta)) %>%
+  mutate(term = reorder_within(term, beta, topic)) %>%
   ggplot(aes(term, beta, fill = factor(topic))) +
   geom_col(show.legend = FALSE) +
   facet_wrap(~ topic, scales = "free") +
-  coord_flip()
+  coord_flip() +
+  scale_x_reordered() +
+  scale_y_continuous(expand = c(0,0)) +
+  labs(y = "Beta", x = "Palabras",
+       title = "Topic Model (k = 4)") +
+  theme(panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(), 
+        axis.line = element_line(colour = "black"),
+        plot.title = element_text(hjust = 0.5))
 Ab_Top_Terms #Al ser el texto tan similar, no se percibe una esperada separación de los temas.
+
+
