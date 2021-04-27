@@ -9,7 +9,6 @@
 #Realizar Análisis de sentimientos para estudiar la negatividad de los titulares de las noticias vs los cuerpos de estas.
 
 
-###LO UNICO QUE FALTA ES SUBIR LAS IMAGENES.
 
 # Librerias usadas
 library(openxlsx) # Abrir base
