@@ -27,7 +27,6 @@ library(igraph) # Para graficar bigramas
 library(ggraph) # Para graficar bigramas
 library(topicmodels) #Para Topic Modeling
 
-
 ### Base de datos
 Abogado2 <- read.xlsx("BaseAbogado2.xlsx")
 
